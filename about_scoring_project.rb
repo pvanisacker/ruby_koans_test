@@ -31,11 +31,47 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 def score(dice)
   # You need to write this method
-  if dice.empty?
-    return 0
+  result=0
+  # create array with the count of numbers
+  counts={}
+  dice.each do |number|
+    if counts.key?(number)
+	  counts[number]+=1
+	else
+	  counts[number]=1
+	end
   end
-  if dice == [5]
-    return
+  if counts.size > 0
+  
+  # find 3 'ones'
+  if counts[1] && counts[1]==3
+    result+=1000
+	counts[1]-=3
+  end
+  
+  # count the other 'ones'
+  if counts[1] && counts[1] != 0
+    result+=100*counts[1]
+	counts[1]=0
+  end
+  
+  # count the fives
+  if counts[5] && counts[5] <= 2
+    result += 50*counts[5]
+  end
+  if counts[5] && counts[5] > 3
+    result += 50*(counts[5]-3)
+  end
+  
+  # count other numbers
+  counts.each do |number,count|
+    if number > 1 && count>=3 
+	  result+=100*number
+	  
+	end
+  end
+  end
+  result
 end
 
 class AboutScoringProject < EdgeCase::Koan
