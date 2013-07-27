@@ -35,10 +35,6 @@ class Proxy
     return true if @messages.include?(name)
     false
   end
-  
-  def number_of_times_called(name)
-    return @messages.count(name)
-  end
 end
 
 # The proxy object should pass the following Koan:
